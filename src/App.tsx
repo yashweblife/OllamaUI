@@ -6,6 +6,7 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import './App.css'
 function App() {
   const [text, setText] = useState('')
+  const [userInput, setUserInput] = useState('')
   const test = async () => {
     const res = await fetch('http://localhost:11434/api/generate', {
       method: 'POST',
@@ -46,6 +47,27 @@ function App() {
       >
         {text || ''}
       </ReactMarkdown>
+      <ReactMarkdown
+        components={{
+          code({ node, inline, className, children, ...props }) {
+            const match = /language-(\w+)/.exec(className || '')
+            return !inline && match ? (
+              <SyntaxHighlighter
+                children={String(children).replace(/\n$/, '')}
+                style={vscDarkPlus}
+                language={match[1]}
+                PreTag="div"
+                {...props}
+              />
+            ) : (
+              <code className={className} {...props}>
+                {children}
+              </code>
+            )
+          }
+        }}
+      >{userInput}</ReactMarkdown>
+      <textarea value={userInput} onChange={(e) => setUserInput(e.target.value)} />
       <button onClick={test}>Click</button>
     </div>
   )
