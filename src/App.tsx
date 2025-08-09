@@ -1,17 +1,18 @@
 import 'github-markdown-css/github-markdown-dark.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import './App.css'
+import MDText from './components/MDText'
 import ModelSelector from './components/ModelSelector'
 function App() {
   const [text, setText] = useState('')
   const [userInput, setUserInput] = useState('')
   const [models, setModels] = useState([])
-  // useEffect(() => {
-  //   getModels()
-  // },[])
+  useEffect(() => {
+    getModels()
+  }, [])
   const getModels = async () => {
     const res = await fetch('http://localhost:11434/api/tags')
     const data = await res.json()
@@ -53,32 +54,12 @@ function App() {
     <div className="App">
       <div
         style={{
-          height:'60vh',
-          overflowY:'scroll'
+          height: '60vh',
+          overflowY: 'scroll',
+          padding: '1rem'
         }}
       >
-      <ReactMarkdown
-        components={{
-          code({ node, inline, className, children, ...props }) {
-            const match = /language-(\w+)/.exec(className || '')
-            return !inline && match ? (
-              <SyntaxHighlighter
-                children={String(children).replace(/\n$/, '')}
-                style={vscDarkPlus}
-                language={match[1]}
-                PreTag="div"
-                {...props}
-              />
-            ) : (
-              <code className={className} {...props}>
-                {children}
-              </code>
-            )
-          }
-        }}
-      >
-        {text || ''}
-      </ReactMarkdown>
+        <MDText text={text} />
       </div>
       <ReactMarkdown
         components={{
@@ -105,18 +86,18 @@ function App() {
           minHeight: '20vh',
           width: '500px',
         }}
-      value={userInput} onChange={(e) => setUserInput(e.target.value)} />
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            backgroundColor: 'rgb(32, 32, 32)'
-          }}
-        >
-          <ModelSelector />
-          <button onClick={pullNewModel}>Pull a Model</button>
+        value={userInput} onChange={(e) => setUserInput(e.target.value)} />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          backgroundColor: 'rgb(32, 32, 32)'
+        }}
+      >
+        <ModelSelector />
+        <button onClick={pullNewModel}>Pull a Model</button>
         <button onClick={test}>Click</button>
-        </div>
+      </div>
     </div>
   )
 }
