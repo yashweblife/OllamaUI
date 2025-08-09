@@ -59,7 +59,7 @@ function App() {
           padding: '1rem'
         }}
       >
-        <MDText text={text} />
+        <MDText text={text}  />
       </div>
       <ReactMarkdown
         components={{
