@@ -10,6 +10,7 @@ function App() {
   const [text, setText] = useState('')
   const [userInput, setUserInput] = useState('')
   const [models, setModels] = useState([])
+  const [chat, setChat] = useState([])
   useEffect(() => {
     getModels()
   }, [])
@@ -50,6 +51,7 @@ function App() {
     console.log(data.response)
     getModels()
   }
+
   return (
     <div className="App">
       <div
@@ -59,7 +61,7 @@ function App() {
           padding: '1rem'
         }}
       >
-        <MDText text={text}  />
+        <MDText text={text} owner=''/>
       </div>
       <ReactMarkdown
         components={{
