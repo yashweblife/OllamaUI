@@ -2,7 +2,7 @@ import ReactMarkdown from "react-markdown"
 import SyntaxHighlighter from "react-syntax-highlighter"
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism"
 
-export default function MDText({ text, owner }: { text: string, owner: string }) {
+export default function MDText({ text, owner }: { text: string, owner?: string }) {
     return (
 
         <div
