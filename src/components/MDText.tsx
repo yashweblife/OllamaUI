@@ -7,7 +7,7 @@ export default function MDText({ text, owner }: { text: string, owner?: string }
 
         <div
             style={{
-                backgroundColor: 'rgb(22,22,22)',
+                backgroundColor: owner?'#242424':'rgb(22,22,22)',
                 padding: '1rem',
                 borderRadius: '0.5rem',
             }}
